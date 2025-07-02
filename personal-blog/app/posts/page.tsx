@@ -1,0 +1,18 @@
+import { Metadata } from "next";
+import { PostsGrid } from "@/components/ui/posts-grid";
+
+export const metadata: Metadata = {
+  title: "All Blog Posts",
+  description: "Browse all articles and blog posts",
+};
+
+export default function PostsPage() {
+  return (
+    <div className="container mx-auto max-w-5xl px-4 py-12">
+      <h1 className="text-4xl font-bold mb-8">Blog Posts</h1>
+
+      {/* Client component with real-time updates */}
+      <PostsGrid />
+    </div>
+  );
+}
