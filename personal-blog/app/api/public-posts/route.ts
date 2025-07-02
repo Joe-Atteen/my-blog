@@ -138,7 +138,7 @@ export async function GET(request: Request) {
       {
         headers: {
           // Configure CORS headers to allow access from other domains
-          "Access-Control-Allow-Origin": "*", // In production, replace with your portfolio domain
+          "Access-Control-Allow-Origin": "https://joeatteen.com/", // In production, replace with your portfolio domain
           "Access-Control-Allow-Methods": "GET, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type",
           "Cache-Control": "public, max-age=60", // Cache for 60 seconds
@@ -160,7 +160,7 @@ export async function OPTIONS() {
     {},
     {
       headers: {
-        "Access-Control-Allow-Origin": "*", // In production, replace with your portfolio domain
+        "Access-Control-Allow-Origin": "https://joeatteen.com/", // In production, replace with your portfolio domain
         "Access-Control-Allow-Methods": "GET, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type",
         "Access-Control-Max-Age": "86400", // 24 hours

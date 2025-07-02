@@ -24,7 +24,7 @@ export async function GET(request: Request) {
         { url: freshImageUrl },
         {
           headers: {
-            "Access-Control-Allow-Origin": "*", // In production, replace with your portfolio domain
+            "Access-Control-Allow-Origin": "https://joeatteen.com/", // In production, replace with your portfolio domain
             "Access-Control-Allow-Methods": "GET, OPTIONS",
             "Cache-Control": "no-cache",
           },
@@ -40,7 +40,7 @@ export async function GET(request: Request) {
         {
           status: 404,
           headers: {
-            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Origin": "https://joeatteen.com/",
             "Access-Control-Allow-Methods": "GET, OPTIONS",
             "Cache-Control": "no-cache",
           },
@@ -62,7 +62,7 @@ export async function OPTIONS() {
     {},
     {
       headers: {
-        "Access-Control-Allow-Origin": "*", // In production, replace with your portfolio domain
+        "Access-Control-Allow-Origin": "https://joeatteen.com/", // In production, replace with your portfolio domain
         "Access-Control-Allow-Methods": "GET, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type",
         "Access-Control-Max-Age": "86400", // 24 hours
