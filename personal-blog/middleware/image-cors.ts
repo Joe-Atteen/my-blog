@@ -29,14 +29,18 @@ export function middleware(request: NextRequest) {
   ) {
     console.log("Adding CORS headers to Supabase image request:", url);
 
+    // Determine allowed origins
+    const allowedOrigins = ["https://joeatteen.com", "http://localhost:5173"];
+    const origin = request.headers.get("origin");
+    const corsOrigin: string = allowedOrigins.includes(origin ?? "")
+      ? origin ?? "https://joeatteen.com"
+      : "https://joeatteen.com";
+
     // Get the response
     const response = NextResponse.next();
 
     // Add CORS headers
-    response.headers.set(
-      "Access-Control-Allow-Origin",
-      "https://joeatteen.com/"
-    );
+    response.headers.set("Access-Control-Allow-Origin", corsOrigin);
     response.headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
     response.headers.set(
       "Access-Control-Allow-Headers",

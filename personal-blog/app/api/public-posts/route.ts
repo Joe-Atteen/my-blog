@@ -138,7 +138,18 @@ export async function GET(request: Request) {
       {
         headers: {
           // Configure CORS headers to allow access from other domains
-          "Access-Control-Allow-Origin": "https://joeatteen.com/", // In production, replace with your portfolio domain
+          // Dynamically set CORS origin
+          ...(() => {
+            const allowedOrigins = [
+              "https://joeatteen.com",
+              "http://localhost:5173",
+            ];
+            const origin = request.headers.get("origin");
+            const corsOrigin = allowedOrigins.includes(origin ?? "")
+              ? origin ?? "https://joeatteen.com"
+              : "https://joeatteen.com";
+            return { "Access-Control-Allow-Origin": corsOrigin };
+          })(),
           "Access-Control-Allow-Methods": "GET, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type",
           "Cache-Control": "public, max-age=60", // Cache for 60 seconds
@@ -155,12 +166,23 @@ export async function GET(request: Request) {
 }
 
 // Handle OPTIONS requests (for CORS preflight)
-export async function OPTIONS() {
+export async function OPTIONS(request: Request) {
   return NextResponse.json(
     {},
     {
       headers: {
-        "Access-Control-Allow-Origin": "https://joeatteen.com/", // In production, replace with your portfolio domain
+        // Dynamically set CORS origin
+        ...(() => {
+          const allowedOrigins = [
+            "https://joeatteen.com",
+            "http://localhost:5173",
+          ];
+          const origin = request.headers.get("origin");
+          const corsOrigin = allowedOrigins.includes(origin ?? "")
+            ? origin ?? "https://joeatteen.com"
+            : "https://joeatteen.com";
+          return { "Access-Control-Allow-Origin": corsOrigin };
+        })(),
         "Access-Control-Allow-Methods": "GET, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type",
         "Access-Control-Max-Age": "86400", // 24 hours
