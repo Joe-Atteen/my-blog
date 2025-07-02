@@ -29,7 +29,8 @@ if (!SUPABASE_URL || !ADMIN_SECRET) {
 }
 
 // Get site URL for CORS configuration
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://atteen-blog.vercel.app/";
 const BUCKET_NAME = process.env.NEXT_PUBLIC_STORAGE_BUCKET || "blog-images";
 
 // Create interactive readline interface

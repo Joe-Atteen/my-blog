@@ -22,7 +22,8 @@ export function generateSEO({
   noIndex = false,
 }: SEOProps): Metadata {
   const siteName = "My Blog";
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yourblog.com";
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://atteen-blog.vercel.app/";
 
   // Use the provided URL or construct it
   const canonicalUrl = url ? url : `${siteUrl}${url}`;

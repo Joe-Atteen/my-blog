@@ -2,7 +2,8 @@ import { createServerClient } from "@/app/supabase-server";
 import { Post } from "@/lib/types";
 
 function generateRssFeed(posts: Post[]) {
-  const site_url = process.env.NEXT_PUBLIC_SITE_URL || "https://yourblog.com";
+  const site_url =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://atteen-blog.vercel.app/";
 
   return `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">

@@ -38,7 +38,8 @@ export async function generateMetadata({
     };
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yourblog.com";
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || "https://atteen-blog.vercel.app/";
 
   return generateSEO({
     title: post.title,
@@ -93,7 +94,8 @@ export default async function PostPage({ params }: PageProps) {
           <SocialShare
             title={title}
             url={`${
-              process.env.NEXT_PUBLIC_SITE_URL || "https://yourblog.com"
+              process.env.NEXT_PUBLIC_SITE_URL ||
+              "https://atteen-blog.vercel.app/"
             }/posts/${slug}`}
           />
         </div>
