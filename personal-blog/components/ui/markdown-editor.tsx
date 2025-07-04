@@ -24,7 +24,7 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
   return (
     <div className="border rounded-md">
       <MDXEditor
-        className="min-h-[400px] p-4"
+        className="min-h-[400px] bg-white p-4"
         markdown={value}
         onChange={onChange}
         plugins={[
