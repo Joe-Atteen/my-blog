@@ -1,45 +1,124 @@
-import React from "react";
+"use client";
+
 import {
   MDXEditor,
+  UndoRedo,
+  BoldItalicUnderlineToggles,
+  toolbarPlugin,
+  CodeToggle,
+  InsertCodeBlock,
+  codeBlockPlugin,
   headingsPlugin,
   listsPlugin,
-  quotePlugin,
-  thematicBreakPlugin,
-  markdownShortcutPlugin,
   linkPlugin,
-  imagePlugin,
+  quotePlugin,
+  markdownShortcutPlugin,
+  ListsToggle,
+  linkDialogPlugin,
+  CreateLink,
+  InsertImage,
+  InsertTable,
   tablePlugin,
-  codeBlockPlugin,
+  imagePlugin,
   codeMirrorPlugin,
+  ConditionalContents,
+  ChangeCodeMirrorLanguage,
+  Separator,
+  InsertThematicBreak,
+  diffSourcePlugin,
+  MDXEditorMethods,
 } from "@mdxeditor/editor";
+import { useTheme } from "next-themes";
+import { Ref } from "react";
 
 import "@mdxeditor/editor/style.css";
+import "./dark-editor.css";
 
-interface MarkdownEditorProps {
+interface Props {
   value: string;
-  onChange: (value: string) => void;
+  editorRef?: Ref<MDXEditorMethods> | null;
+  fieldChange: (value: string) => void;
 }
 
-export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
+const Editor = ({ value, editorRef, fieldChange }: Props) => {
+  const { resolvedTheme } = useTheme();
+
   return (
-    <div className="border rounded-md">
-      <MDXEditor
-        className="min-h-[400px] bg-white p-4"
-        markdown={value}
-        onChange={onChange}
-        plugins={[
-          headingsPlugin(),
-          listsPlugin(),
-          quotePlugin(),
-          thematicBreakPlugin(),
-          markdownShortcutPlugin(),
-          linkPlugin(),
-          imagePlugin(),
-          tablePlugin(),
-          codeBlockPlugin(),
-          codeMirrorPlugin(),
-        ]}
-      />
-    </div>
+    <MDXEditor
+      key={resolvedTheme}
+      markdown={value}
+      ref={editorRef}
+      onChange={fieldChange}
+      className="bg-white markdown-editor dark-editor grid w-full border"
+      plugins={[
+        headingsPlugin(),
+        listsPlugin(),
+        linkPlugin(),
+        linkDialogPlugin(),
+        quotePlugin(),
+        markdownShortcutPlugin(),
+        tablePlugin(),
+        imagePlugin(),
+        codeBlockPlugin({ defaultCodeBlockLanguage: "" }),
+        codeMirrorPlugin({
+          codeBlockLanguages: {
+            css: "css",
+            txt: "txt",
+            sql: "sql",
+            html: "html",
+            sass: "sass",
+            scss: "scss",
+            bash: "bash",
+            json: "json",
+            js: "javascript",
+            ts: "typescript",
+            "": "unspecified",
+            tsx: "TypeScript (React)",
+            jsx: "JavaScript (React)",
+          },
+          autoLoadLanguageSupport: true,
+          codeMirrorExtensions: [],
+        }),
+        diffSourcePlugin({ viewMode: "rich-text", diffMarkdown: "" }),
+        toolbarPlugin({
+          toolbarContents: () => (
+            <ConditionalContents
+              options={[
+                {
+                  when: (editor) => editor?.editorType === "codeblock",
+                  contents: () => <ChangeCodeMirrorLanguage />,
+                },
+                {
+                  fallback: () => (
+                    <>
+                      <UndoRedo />
+                      <Separator />
+
+                      <BoldItalicUnderlineToggles />
+                      <CodeToggle />
+                      <Separator />
+
+                      <ListsToggle />
+                      <Separator />
+
+                      <CreateLink />
+                      <InsertImage />
+                      <Separator />
+
+                      <InsertTable />
+                      <InsertThematicBreak />
+                      <Separator />
+
+                      <InsertCodeBlock />
+                    </>
+                  ),
+                },
+              ]}
+            />
+          ),
+        }),
+      ]}
+    />
   );
-}
+};
+export default Editor;

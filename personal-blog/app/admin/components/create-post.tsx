@@ -3,12 +3,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Plus } from "lucide-react";
 import { PostForm } from "../components/post-form"; // Adjust the import path as necessary
 import { PostFormData } from "@/lib/types";
@@ -23,7 +22,6 @@ interface CreatePostProps {
 }
 
 export function CreatePost({ userId }: CreatePostProps) {
-  const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   // Router no longer needed with real-time updates
   const supabase = createBrowserClient();
@@ -53,7 +51,6 @@ export function CreatePost({ userId }: CreatePostProps) {
       if (error) throw error;
 
       toast.success("Post created successfully!");
-      setOpen(false);
       // No need to call router.refresh() as real-time subscription will update the UI
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -69,27 +66,26 @@ export function CreatePost({ userId }: CreatePostProps) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          <Plus className="h-4 w-4 mr-1" /> Create Post
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-4xl">
-        <DialogHeader>
-          <DialogTitle>Create New Post</DialogTitle>
-        </DialogHeader>
-        <PostForm
-          onSubmit={handleSubmit}
-          isSubmitting={isSubmitting}
-          defaultValues={{
-            title: "",
-            content: "",
-            image_url: "",
-            published: false,
-          }}
-        />
-      </DialogContent>
-    </Dialog>
+    <Accordion type="single" collapsible className="w-full">
+      <AccordionItem value="create-post">
+        <AccordionTrigger>
+          <Button className="mr-2">
+            <Plus className="h-4 w-4 mr-1" /> Create New Post
+          </Button>
+        </AccordionTrigger>
+        <AccordionContent>
+          <PostForm
+            onSubmit={handleSubmit}
+            isSubmitting={isSubmitting}
+            defaultValues={{
+              title: "",
+              content: "",
+              image_url: "",
+              published: false,
+            }}
+          />
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 }

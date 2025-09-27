@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { MarkdownEditor } from "@/components/ui/markdown-editor";
+import Editor from "@/components/ui/markdown-editor";
 import { ImageUpload } from "@/components/ui/image-upload";
 import { PostFormData } from "@/lib/types";
 import { Loader2 } from "lucide-react";
@@ -63,7 +63,10 @@ export function PostForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 overflow-y-scroll max-h-dvh">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="space-y-6 overflow-y-scroll max-h-dvh"
+      >
         <FormField
           control={form.control}
           name="title"
@@ -102,7 +105,7 @@ export function PostForm({
             <FormItem>
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <MarkdownEditor value={field.value} onChange={field.onChange} />
+                <Editor value={field.value} fieldChange={field.onChange} />
               </FormControl>
               <FormMessage />
             </FormItem>

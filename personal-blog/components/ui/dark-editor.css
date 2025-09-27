@@ -1,0 +1,42 @@
+/* Fix for list markers in MDXEditor */
+.markdown-editor [data-lexical-editor="true"] ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  padding-left: 0;
+}
+
+.markdown-editor [data-lexical-editor="true"] ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+  padding-left: 0;
+}
+
+.markdown-editor [data-lexical-editor="true"] li {
+  display: list-item;
+  margin-bottom: 0.25rem;
+}
+
+.markdown-editor [data-lexical-editor="true"] ul ul {
+  list-style-type: circle;
+  margin-top: 0.25rem;
+}
+
+.markdown-editor [data-lexical-editor="true"] ul ul ul {
+  list-style-type: square;
+}
+
+/* Dark theme adjustments */
+/* .dark .markdown-editor {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+.dark .markdown-editor [data-lexical-editor="true"] {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+.dark .markdown-editor .toolbar {
+  background-color: #374151;
+  border-color: #4b5563;
+} */

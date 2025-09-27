@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { createServerClient } from "@/app/supabase-server";
 import { Post } from "@/lib/types";
 import { format } from "date-fns";
-import MarkdownIt from "markdown-it";
 import { CommentsSection } from "@/components/ui/comments-section";
 import { CommentsList } from "@/components/ui/comments-list";
 import { SocialShare } from "@/components/ui/social-share";
@@ -10,6 +9,7 @@ import { RelatedPosts } from "@/components/ui/related-posts";
 import { generateSEO } from "@/lib/seo";
 import { Metadata } from "next";
 import { SupabaseImage } from "@/components/ui/supabase-image";
+import { BlogContent } from "@/components/ui/blog-content";
 
 interface PageProps {
   params: Promise<{
@@ -69,22 +69,6 @@ export default async function PostPage({ params }: PageProps) {
   const { title, content, created_at } = post as Post;
   const formattedDate = format(new Date(created_at), "MMMM d, yyyy");
 
-  // Parse markdown content
-  const compiledSource = await (async () => {
-    try {
-      // Convert markdown to HTML using markdown-it
-      const md = new MarkdownIt({
-        html: true,
-        linkify: true,
-        typographer: true,
-      });
-      return md.render(content);
-    } catch (error) {
-      console.error("Error compiling markdown:", error);
-      return "Error rendering content";
-    }
-  })();
-
   return (
     <article className="container mx-auto max-w-3xl px-4 py-10">
       <header className="mb-8">
@@ -112,9 +96,7 @@ export default async function PostPage({ params }: PageProps) {
         )}
       </header>
 
-      <div className="prose prose-slate max-w-none">
-        <div dangerouslySetInnerHTML={{ __html: compiledSource }} />
-      </div>
+      <BlogContent content={content} />
 
       {/* Comments Section */}
       <div className="mt-10 pt-10 border-t">

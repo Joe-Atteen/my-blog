@@ -134,11 +134,9 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-7xl px-4 py-10">
-      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+    <div className="container mx-auto max-w-7xl px-4 pb-10">
 
-      <div className="mb-6 flex justify-between items-center">
-        <h2 className="text-xl font-semibold">Manage Posts</h2>
+      <div className="mb-10 max-w-[900px] mx-auto">
         {userId && <CreatePost userId={userId} />}
       </div>
 
