@@ -27,6 +27,7 @@ import {
   InsertThematicBreak,
   diffSourcePlugin,
   MDXEditorMethods,
+  BlockTypeSelect,
 } from "@mdxeditor/editor";
 import { useTheme } from "next-themes";
 import { Ref } from "react";
@@ -92,6 +93,9 @@ const Editor = ({ value, editorRef, fieldChange }: Props) => {
                   fallback: () => (
                     <>
                       <UndoRedo />
+                      <Separator />
+
+                      <BlockTypeSelect />
                       <Separator />
 
                       <BoldItalicUnderlineToggles />

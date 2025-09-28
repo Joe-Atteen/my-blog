@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Post } from "@/lib/types";
 import {
   Table,
@@ -12,14 +13,21 @@ import {
 import { Button } from "@/components/ui/button";
 import { formatDistanceToNow } from "date-fns";
 import { EditPost, DeletePost } from ".";
+import { EditPostForm } from "./edit-post-form";
 import Link from "next/link";
 import { Eye, Check, X } from "lucide-react";
+import { Fragment } from "react";
 
 interface PostListProps {
   posts: Post[];
 }
 
 export function PostList({ posts }: PostListProps) {
+  const [expandedPostId, setExpandedPostId] = useState<string | null>(null);
+
+  const handleToggleEdit = (postId: string) => {
+    setExpandedPostId(expandedPostId === postId ? null : postId);
+  };
   return (
     <div className="border rounded-md">
       <Table>
@@ -44,41 +52,53 @@ export function PostList({ posts }: PostListProps) {
             </TableRow>
           ) : (
             posts.map((post) => (
-              <TableRow key={post.id}>
-                <TableCell className="font-medium">{post.title}</TableCell>
-                <TableCell>
-                  <div className="flex items-center">
-                    {post.published ? (
-                      <span className="flex items-center text-green-600">
-                        <Check className="h-4 w-4 mr-1" /> Published
-                      </span>
-                    ) : (
-                      <span className="flex items-center text-amber-600">
-                        <X className="h-4 w-4 mr-1" /> Draft
-                      </span>
-                    )}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  {formatDistanceToNow(new Date(post.created_at), {
-                    addSuffix: true,
-                  })}
-                </TableCell>
-                <TableCell>
-                  {formatDistanceToNow(new Date(post.updated_at), {
-                    addSuffix: true,
-                  })}
-                </TableCell>
-                <TableCell className="flex justify-end space-x-2">
-                  <Button asChild size="sm" variant="outline">
-                    <Link href={`/posts/${post.slug}`} target="_blank">
-                      <Eye className="h-4 w-4 mr-1" /> Preview
-                    </Link>
-                  </Button>
-                  <EditPost post={post} />
-                  <DeletePost post={post} />
-                </TableCell>
-              </TableRow>
+              <Fragment key={post.id}>
+                <TableRow>
+                  <TableCell className="font-medium">{post.title}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center">
+                      {post.published ? (
+                        <span className="flex items-center text-green-600">
+                          <Check className="h-4 w-4 mr-1" /> Published
+                        </span>
+                      ) : (
+                        <span className="flex items-center text-amber-600">
+                          <X className="h-4 w-4 mr-1" /> Draft
+                        </span>
+                      )}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    {formatDistanceToNow(new Date(post.created_at), {
+                      addSuffix: true,
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    {formatDistanceToNow(new Date(post.updated_at), {
+                      addSuffix: true,
+                    })}
+                  </TableCell>
+                  <TableCell className="flex justify-end space-x-2">
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={`/posts/${post.slug}`} target="_blank">
+                        <Eye className="h-4 w-4 mr-1" /> Preview
+                      </Link>
+                    </Button>
+                    <EditPost onToggle={() => handleToggleEdit(post.id)} />
+                    <DeletePost post={post} />
+                  </TableCell>
+                </TableRow>
+                {expandedPostId === post.id && (
+                  <TableRow key={`${post.id}-edit`}>
+                    <TableCell colSpan={5} className="p-0">
+                      <EditPostForm
+                        post={post}
+                        onClose={() => setExpandedPostId(null)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                )}
+              </Fragment>
             ))
           )}
         </TableBody>
