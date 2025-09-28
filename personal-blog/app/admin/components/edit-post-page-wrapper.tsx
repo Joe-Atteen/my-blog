@@ -12,7 +12,7 @@ export function EditPostPageWrapper({ post }: EditPostPageWrapperProps) {
   const router = useRouter();
 
   const handleClose = () => {
-    router.push('/admin');
+    router.push("/admin");
   };
 
   return (
