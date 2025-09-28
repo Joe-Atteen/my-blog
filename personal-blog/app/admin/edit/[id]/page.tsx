@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { createServerClient } from "@/lib/supabase-server";
-import { EditPost } from "../../components/edit-post";
+import { EditPostPageWrapper } from "../../components/edit-post-page-wrapper";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -35,7 +35,7 @@ export default async function EditPostPage({ params }: PageProps) {
   return (
     <div className="py-6">
       <h1 className="text-3xl font-bold mb-6">Edit Post</h1>
-      <EditPost post={post} />
+      <EditPostPageWrapper post={post} />
     </div>
   );
 }
